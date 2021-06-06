@@ -1,0 +1,50 @@
+let path = require('path')
+let HtmlWebpackPlugin = require('html-webpack-plugin')
+let MiniCssExtractPlugin = require('mini-css-extract-plugin')
+let OptimizeCss = require('optimize-css-assets-webpack-plugin') // 压缩css
+let UglifJs = require('uglifyjs-webpack-plugin ')
+module.exports = {
+    optimization:{
+        minimizer:[
+            new OptimizeCss(),
+            new UglifJs({
+                cache:true, // 开启到node_modules中的缓存中
+                parallel:true, // 并发打包
+                sourceMap:true // 源码映射
+            })
+        ]  
+    },
+    mode: 'development',
+    entry: './src/index.js',
+    plugins: [ // 数组 放着所有webpack插件
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            filename: 'index.html'
+        }),
+        new MiniCssExtractPlugin({
+            filename:'main.css'
+        })
+    ],
+    module: {
+        rules: [ 
+            {
+                test: /\.css/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'postcss-loader', // 加上前缀
+                ]
+            },
+            {
+                test: /\.less/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader', // @import 解析路径
+                    'postcss-loader', // 加上前缀
+                    'less-loader' // 把less ->css
+                ]
+            }
+        ]
+
+    }
+}
