@@ -20,6 +20,9 @@ module.exports = {
         filename:'[name][hash:8].js',
         path: path.resolve(__dirname,'dist')
     },
+    resolve:{
+        modules:[path.resolve('node_modlues')]
+    },
     devServer:{
 
         //1.前端单独来模拟数据

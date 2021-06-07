@@ -1,0 +1,33 @@
+let path = require('path')
+let HtmlWebpackPlugin = require('html-webpack-plugin')
+module.exports = {
+    mode:'development',
+    // 多个入口
+    entry:{
+        home: './src/index.js',
+        other: './src/other.js'
+    },
+    output:{
+        // [name] home, other.js
+        filename:'[name][hash:8].js',
+        path: path.resolve(__dirname,'dist')
+    },
+    watch:true, // 更改文件 实时变化
+    watchOptions:{
+        poll: 1000, // 每秒问我1000次
+        aggregateTimeout: 500, // 防抖 我一直输入代码
+        ignored:/node_modules/ //不需要监控哪个文件
+    },
+    plugins:[
+        new HtmlWebpackPlugin({
+            template:'./index.html',
+            filename:'index.html',
+            chunks:['home']
+        }),
+        new HtmlWebpackPlugin({
+            template:'./index.html',
+            filename:'other.html',
+            chunks:['other']
+        })
+    ]
+}

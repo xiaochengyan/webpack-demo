@@ -20,24 +20,6 @@ module.exports = {
         filename:'[name][hash:8].js',
         path: path.resolve(__dirname,'dist')
     },
-    devServer:{
-
-        //1.前端单独来模拟数据
-        before(app){ // 提供的方法
-            app.get('/user',(req,res)=>{
-                res.json({name:'adfasd'})
-            })
-        },
-    //2.开启代理
-        // proxy:{
-        //     '/api':{
-        //         target:'http://localhost:3000',
-        //         pathRewrite:{
-        //             '/api':''
-        //         }
-        //     } //配置一个代理
-        // }
-    },
     watch:true, // 更改文件 实时变化
     watchOptions:{
         poll: 1000, // 每秒问我1000次
